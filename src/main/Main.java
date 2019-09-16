@@ -20,7 +20,7 @@ public class Main {
             try {
                 group.add(s);
             } catch (GroupException e) {
-                System.out.println(e.getMessage() + ", " + e.getNumber());
+                System.out.println(e.getMessage() + ", " + e.getNumber() + "\n");
             }
         }
 
