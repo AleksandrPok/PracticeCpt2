@@ -12,12 +12,7 @@ public class Group {
         if (students.length == 10) {
             throw new GroupException("В группе достаточно студентов", 1);
         } else {
-            Student[] buf = new Student[students.length+1];
-            buf[buf.length-1] = newStudent;
-            for (int i = 0; i < students.length; i++) {
-                buf[i] = students[i];
-            }
-            students = buf;
+            students = addR(students, newStudent);
         }
     }
 
@@ -38,21 +33,38 @@ public class Group {
         }
     }
 
-    public String findStudent(String surname){
-        String result = "Студент не найден";
+    public Student[] findStudent(String surname){
+        Student[] found = new Student[0];
         for (Student s: students) {
-            if (s.toString().contains(surname)) {
-                result += s.toString() + "\n";
+            if (s.getSurname().contains(surname)) {
+                found = addR(found, s);
             }
         }
-        return result.substring(17);
+        return found.length>0 ? found : null;
+    }
+
+    private Student[] addR(Student[] s, Student student){
+        Student[] buf = new Student[s.length+1];
+        buf[buf.length-1] = student;
+        for (int i = 0; i < s.length; i++) {
+            buf[i] = s[i];
+        }
+        return buf;
     }
 
     @Override
     public String toString(){
+        StringBuilder sb = new StringBuilder("Группа " + groupName + "\n");
+        for (Student s : sort()) {
+            sb.append(s.toString().substring(8));
+            sb.append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    private Student[] sort(){
         Student[] buf = students;
         Student bufCell;
-        String group = "";
         for (int i = buf.length-1; i >= 1; i--) {
             for (int j = 0; j < i; j++)
                 if (needSwap(buf[j].toString().substring(8).toCharArray(), buf[j + 1].toString().substring(8).toCharArray())) {
@@ -61,12 +73,7 @@ public class Group {
                     buf[j + 1] = bufCell;
                 }
         }
-        for (Student s: buf){
-            if (s != null){
-                group += s.toString().substring(8) + "\n";
-            }
-        }
-        return "Группа " + groupName + "\n" + group;
+        return buf;
     }
 
     private boolean needSwap(char[] a, char[] b){

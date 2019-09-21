@@ -13,6 +13,22 @@ public class Human {
         this.age = age;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getSecondname() {
+        return secondname;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     @Override
     public String toString(){
         return surname + " " + firstname + " " + secondname + " возраст " + age;

@@ -20,11 +20,18 @@ public class Main {
             try {
                 group.add(s);
             } catch (GroupException e) {
-                System.out.println(e.getMessage() + ", " + e.getNumber() + "\n");
+                System.out.println(e.getMessage() + ", " + e.getNumber());
             }
         }
 
-        System.out.println(group.findStudent("Петров"));
+        try {
+            for (Student s: group.findStudent("Сидоров")) {
+                System.out.println(s);
+            }
+        } catch (NullPointerException ex){
+            System.out.println("Студент не найден");
+        }
+
         group.delStudent(4);
         System.out.println(group.toString());
     }
