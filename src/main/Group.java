@@ -46,9 +46,10 @@ public class Group {
     private Student[] addR(Student[] s, Student student){
         Student[] buf = new Student[s.length+1];
         buf[buf.length-1] = student;
-        for (int i = 0; i < s.length; i++) {
-            buf[i] = s[i];
-        }
+        System.arraycopy(s, 0, buf, 0, s.length);
+//        for (int i = 0; i < s.length; i++) {
+//            buf[i] = s[i];
+//        }
         return buf;
     }
 
@@ -95,6 +96,9 @@ public class Group {
         return false;
     }
 
+    public Student[] getStudents() {
+        return students;
+    }
 }
 
 class GroupException extends Exception{
