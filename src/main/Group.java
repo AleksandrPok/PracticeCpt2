@@ -1,8 +1,12 @@
 package main;
 
+import java.io.*;
+
 public class Group {
     Student[] students = new Student[0];
     String groupName;
+
+    public Group(){}
 
     public Group(String groupName){
         this.groupName = groupName;
@@ -47,15 +51,13 @@ public class Group {
         Student[] buf = new Student[s.length+1];
         buf[buf.length-1] = student;
         System.arraycopy(s, 0, buf, 0, s.length);
-//        for (int i = 0; i < s.length; i++) {
-//            buf[i] = s[i];
-//        }
         return buf;
     }
 
     @Override
     public String toString(){
-        StringBuilder sb = new StringBuilder("Группа " + groupName + "\n");
+        StringBuilder sb = new StringBuilder("Группа " + groupName);
+        sb.append(System.lineSeparator());
         for (Student s : sort()) {
             sb.append(s.toString().substring(8));
             sb.append(System.lineSeparator());
@@ -98,6 +100,41 @@ public class Group {
 
     public Student[] getStudents() {
         return students;
+    }
+
+    public void saveGroup(){
+        try (FileWriter writer = new FileWriter("C://Users/"+ System.getProperty("user.name") +"/Desktop/group.txt"))
+        {
+            writer.write(toString());
+            writer.flush();
+        } catch (IOException ex){
+            System.out.println("Что-то не так с записью в файл");
+        }
+    }
+
+    public void readGroup(){
+        try (FileReader fileReader = new FileReader("C://Users/"+ System.getProperty("user.name") +"/Desktop/group.txt"))
+        {
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            while (bufferedReader.ready()){
+                String[] buf = bufferedReader.readLine().split(" ");
+                    if (buf[0].equals("Группа")){
+                        setGroupName(buf[1]);
+                    } else {
+                        try {
+                            add(new Student(buf[1], buf[2], buf[0], Integer.parseInt(buf[4]), buf[6]));
+                        } catch (GroupException e) {
+                            System.out.println(e.getMessage() + ", " + e.getNumber());
+                        }
+                    }
+            }
+        } catch (IOException ex){
+            System.out.println("Что-то не так с чтением файла");
+        }
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }
 

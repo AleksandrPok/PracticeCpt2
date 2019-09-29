@@ -37,6 +37,6 @@ public class Human {
 
     @Override
     public String toString(){
-        return surname + " " + firstname + " " + secondname + " возраст " + age;
+        return surname + " " + firstname + " " + secondname + " возраст " + age + " пол " + male;
     }
 }

@@ -49,6 +49,13 @@ public class Main {
         };
 
         commissarCame(commissar.isFit());
+        group.saveGroup();
+
+
+//======Эти строки читают файл group.txt с рабочего стола
+//        Group group1 = new Group();
+//        group1.readGroup();
+//        System.out.println(group1.toString());
     }
 
     private static void commissarCame(Student[] cc){
